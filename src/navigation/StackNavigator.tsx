@@ -26,13 +26,16 @@ export const StackNavigator = () => {
         name="Detail"
         component={DetailScreen}
         options={{
-          title: 'Detail Information',
+          title: '', // Title is set in the DetailScreen
           headerStyle: {
             backgroundColor: '#fff',
           },
-          headerTintColor: '#2D3E51',
           headerTitleStyle: {
             fontWeight: 'bold',
+          },
+          headerBackTitle: 'Back to List',
+          headerBackTitleStyle: {
+            fontSize: 16,
           },
         }}
       />

@@ -1,21 +1,13 @@
-import {
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
-import {useNavigation, NavigationProp} from '@react-navigation/native';
-import {StackParam} from '../types/StackParams';
-import {usePopularTVShowList} from '../hooks/useContentList';
-
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+import React, {useState} from 'react';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {useFetchContent} from '../hooks/useContentList';
+import {TVShowTypeDropDown} from '../components/TVShowTypeDropDown';
+import {ContentList} from '../components/ContentList';
+import {TVShowQueryType} from '../types/ContentQueryType';
 
 export const TVShowsScreen = () => {
-  const navigation = useNavigation<NavigationProp<StackParam>>();
-  const {items, loading} = usePopularTVShowList();
+  const [listType, setListType] = useState<TVShowQueryType>('popularTVShows');
+  const {items, loading} = useFetchContent(listType);
 
   if (loading) {
     return (
@@ -24,30 +16,10 @@ export const TVShowsScreen = () => {
       </View>
     );
   }
-
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={items}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <View style={styles.movieItem}>
-            <Image source={{uri: `${IMAGE_BASE_URL}${item.poster_path}`}} style={styles.poster} />
-            <View style={styles.movieInfo}>
-              <Text style={styles.title}>{item.name}</Text>
-              <Text>Popularity: {item.popularity}</Text>
-              <Text>Release Date: {item.release_date}</Text>
-              <TouchableOpacity
-                style={styles.detailButton}
-                onPress={() =>
-                  navigation.navigate('Detail', {contentType: 'tv', contentId: item.id})
-                }>
-                <Text style={styles.buttonText}>More Details</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      />
+    <View style={{flex: 1}}>
+      <TVShowTypeDropDown onValueChange={setListType} />
+      <ContentList contentType="tv" items={items} />
     </View>
   );
 };

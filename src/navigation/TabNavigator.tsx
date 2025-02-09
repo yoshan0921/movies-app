@@ -12,6 +12,7 @@ export const TabNavigator = () => {
     <TopTabs.Navigator
       screenOptions={{
         tabBarLabelStyle: {fontSize: 14, padding: 0, margin: 2},
+        tabBarIndicatorStyle: {backgroundColor: 'black', height: 3},
       }}
       style={styles.container}>
       <TopTabs.Screen name="Movies" component={MoviesScreen} />

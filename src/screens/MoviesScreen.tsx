@@ -1,9 +1,13 @@
+import React, {useState} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
-import {usePopularMovieList} from '../hooks/useContentList';
-import {ContentTypeDropDown} from '../components/ContentTypeDropDown';
+import {useFetchContent} from '../hooks/useContentList';
+import {MovieTypeDropDown} from '../components/MovieTypeDropDown';
 import {ContentList} from '../components/ContentList';
+import {MovieQueryType} from '../types/ContentQueryType';
+
 export const MoviesScreen = () => {
-  const {items, loading} = usePopularMovieList();
+  const [listType, setListType] = useState<MovieQueryType>('popularMovies');
+  const {items, loading} = useFetchContent(listType);
 
   if (loading) {
     return (
@@ -14,7 +18,7 @@ export const MoviesScreen = () => {
   }
   return (
     <View style={{flex: 1}}>
-      <ContentTypeDropDown />
+      <MovieTypeDropDown onValueChange={setListType} />
       <ContentList contentType="movie" items={items} />
     </View>
   );

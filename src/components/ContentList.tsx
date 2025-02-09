@@ -20,7 +20,7 @@ export const ContentList: React.FC<{contentType: string; items: Content[]}> = ({
           <View style={styles.movieItem}>
             <Image source={{uri: `${IMAGE_BASE_URL}${item.poster_path}`}} style={styles.poster} />
             <View style={styles.movieInfo}>
-              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.title}>{contentType === 'movie' ? item.title : item.name}</Text>
               <Text>Popularity: {item.popularity}</Text>
               <Text>Release Date: {item.release_date}</Text>
               <TouchableOpacity
@@ -39,9 +39,9 @@ export const ContentList: React.FC<{contentType: string; items: Content[]}> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#fff', paddingBottom: 16},
-  movieItem: {flexDirection: 'row', paddingTop: 16, paddingHorizontal: 16},
-  poster: {width: 100, height: 120, marginRight: 16},
+  container: {flex: 1, backgroundColor: '#fff'},
+  movieItem: {flexDirection: 'row', paddingBottom: 16, paddingHorizontal: 16},
+  poster: {width: 100, height: 140, marginRight: 16},
   movieInfo: {
     flex: 1,
     gap: 5,
