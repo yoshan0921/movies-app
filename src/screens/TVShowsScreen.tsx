@@ -1,52 +1,40 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useFetchContent} from '../hooks/useContentList';
-import {TVShowTypeDropDown} from '../components/TVShowTypeDropDown';
+import {TVShowQueryDropDown} from '../components/TVShowQueryDropDown';
 import {ContentList} from '../components/ContentList';
-import {TVShowQueryType} from '../types/ContentQueryType';
+import {TVShowQueryType} from '../types/ContentType';
+import {Loading} from '../components/Loading';
 
 export const TVShowsScreen = () => {
   const [listType, setListType] = useState<TVShowQueryType>('popularTVShows');
   const {items, loading} = useFetchContent(listType);
+  console.log(loading);
 
   if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#000000" />
-      </View>
-    );
+    return <Loading />;
   }
+
   return (
-    <View style={{flex: 1}}>
-      <TVShowTypeDropDown onValueChange={setListType} />
+    <View style={styles.container}>
+      <View style={styles.searchConditionArea}>
+        <TVShowQueryDropDown onValueChange={setListType} />
+      </View>
       <ContentList contentType="tv" items={items} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#fff', padding: 16},
-  movieItem: {flexDirection: 'row', marginBottom: 16},
-  poster: {width: 100, height: 120, marginRight: 16},
-  movieInfo: {
+  container: {
     flex: 1,
-    gap: 5,
-    fontSize: 18,
-    alignItems: 'flex-start',
-    fontWeight: 'bold',
-    flexShrink: 1,
+    gap: 32,
+    backgroundColor: '#fff',
+    paddingTop: 32,
   },
-  title: {fontWeight: 'bold'},
-  detailButton: {
-    backgroundColor: '#22B5D4',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    width: '100%',
+  searchConditionArea: {
+    gap: 16,
+    backgroundColor: '#fff',
+    paddingHorizontal: 40,
   },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-  },
-  loadingContainer: {flex: 1, justifyContent: 'center', alignItems: 'center'},
 });

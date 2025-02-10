@@ -1,3 +1,7 @@
+export type ContentType = 'movie' | 'tv' | 'multi';
+
+export type ContentQueryType = TVShowQueryType | MovieQueryType;
+
 export type MovieQueryType =
   | 'popularMovies'
   | 'nowPlayingMovies'
@@ -9,5 +13,3 @@ export type TVShowQueryType =
   | 'onTheAirTVShows'
   | 'popularTVShows'
   | 'topRatedTVShows';
-
-export type ContentQueryType = TVShowQueryType | MovieQueryType;

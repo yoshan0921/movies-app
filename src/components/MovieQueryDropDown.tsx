@@ -13,25 +13,24 @@ import {
   SelectItem,
 } from '../../components/ui/select';
 import {ChevronDownIcon} from '../../components/ui/icon';
-import {TVShowQueryType} from '../types/ContentQueryType';
+import {MovieQueryType} from '../types/ContentType';
 
 type Props = {
-  onValueChange: (value: TVShowQueryType) => void;
+  onValueChange: (value: MovieQueryType) => void;
 };
 
-export const TVShowTypeDropDown = ({onValueChange}: Props) => {
-  const [selectedValue, setSelectedValue] = useState<TVShowQueryType>('popularTVShows');
-  console.log('selectedValue', selectedValue);
+export const MovieQueryDropDown = ({onValueChange}: Props) => {
+  const [selectedValue, setSelectedValue] = useState<MovieQueryType>('popularMovies');
 
   return (
     <Select
-      style={styles.container}
       initialLabel="Popular"
       defaultValue={selectedValue}
       onValueChange={value => {
-        setSelectedValue(value as TVShowQueryType);
-        onValueChange(value as TVShowQueryType);
-      }}>
+        setSelectedValue(value as MovieQueryType);
+        onValueChange(value as MovieQueryType);
+      }}
+      isFocused={true}>
       <SelectTrigger style={styles.selectTrigger}>
         <SelectInput />
         <SelectIcon className="mr-3" as={ChevronDownIcon} />
@@ -42,10 +41,10 @@ export const TVShowTypeDropDown = ({onValueChange}: Props) => {
           <SelectDragIndicatorWrapper style={styles.selectDragIndicatorContainer}>
             <SelectDragIndicator />
           </SelectDragIndicatorWrapper>
-          <SelectItem label="Airing Today" value="airingTodayTVShows" />
-          <SelectItem label="On The Air" value="onTheAirTVShows" />
-          <SelectItem label="Popular" value="popularTVShows" />
-          <SelectItem label="Top Rated" value="topRatedTVShows" />
+          <SelectItem label="Now Playing" value="nowPlayingMovies" />
+          <SelectItem label="Popular" value="popularMovies" />
+          <SelectItem label="Top Rated" value="topRatedMovies" />
+          <SelectItem label="Upcoming" value="upcomingMovies" />
         </SelectContent>
       </SelectPortal>
     </Select>
@@ -53,13 +52,7 @@ export const TVShowTypeDropDown = ({onValueChange}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    paddingTop: 32,
-    paddingBottom: 32,
-    paddingHorizontal: 16,
-  },
-  selectTrigger: {justifyContent: 'space-between', width: '70%', margin: 'auto'},
+  selectTrigger: {justifyContent: 'space-between'},
   selectDragIndicatorContainer: {marginVertical: 16},
   selectContainer: {paddingBottom: 32},
 });

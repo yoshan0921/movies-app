@@ -15,3 +15,8 @@ export const TVSHOW_ENDPOINTS = {
   TOP_RATED: 'tv/top_rated',
   DETAIL: 'tv',
 };
+export const SEARCH_ENDPOINTS = {
+  MOVIE: 'search/movie',
+  TV: 'search/tv',
+  MULTI: 'search/multi',
+};

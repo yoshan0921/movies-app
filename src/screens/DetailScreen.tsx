@@ -1,9 +1,10 @@
 import React, {useLayoutEffect} from 'react';
-import {Text, View, StyleSheet, ActivityIndicator, StatusBar} from 'react-native';
+import {Text, View, StyleSheet, StatusBar} from 'react-native';
 import {StackParam} from '../types/StackParams';
 import {RouteProp, useRoute, useNavigation, useFocusEffect} from '@react-navigation/native';
 import {useContentDetail} from '../hooks/useContentDetail';
 import {ContentDetail} from '../components/ContentDetail';
+import {Loading} from '../components/Loading';
 
 type DetailScreenRouteProp = RouteProp<StackParam, 'Detail'>;
 
@@ -30,11 +31,7 @@ export const DetailScreen = () => {
   );
 
   if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#000000" />
-      </View>
-    );
+    return <Loading />;
   }
 
   if (!content) {
@@ -45,10 +42,19 @@ export const DetailScreen = () => {
     );
   }
 
-  return <ContentDetail content={content} />;
+  return (
+    <View style={styles.container}>
+      <ContentDetail content={content} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  loadingContainer: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+  container: {
+    flex: 1,
+    gap: 32,
+    backgroundColor: '#fff',
+    paddingVertical: 48,
+  },
   noContent: {flex: 1, justifyContent: 'center', alignItems: 'center'},
 });

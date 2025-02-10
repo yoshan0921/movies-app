@@ -1,29 +1,40 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useFetchContent} from '../hooks/useContentList';
-import {MovieTypeDropDown} from '../components/MovieTypeDropDown';
+import {MovieQueryDropDown} from '../components/MovieQueryDropDown';
 import {ContentList} from '../components/ContentList';
-import {MovieQueryType} from '../types/ContentQueryType';
+import {MovieQueryType} from '../types/ContentType';
+import {Loading} from '../components/Loading';
 
 export const MoviesScreen = () => {
   const [listType, setListType] = useState<MovieQueryType>('popularMovies');
   const {items, loading} = useFetchContent(listType);
+  console.log('loading', loading);
 
   if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#000000" />
-      </View>
-    );
+    return <Loading />;
   }
+
   return (
-    <View style={{flex: 1}}>
-      <MovieTypeDropDown onValueChange={setListType} />
+    <View style={styles.container}>
+      <View style={styles.searchConditionArea}>
+        <MovieQueryDropDown onValueChange={setListType} />
+      </View>
       <ContentList contentType="movie" items={items} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  loadingContainer: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+  container: {
+    flex: 1,
+    gap: 32,
+    backgroundColor: '#fff',
+    paddingTop: 32,
+  },
+  searchConditionArea: {
+    gap: 16,
+    backgroundColor: '#fff',
+    paddingHorizontal: 40,
+  },
 });
