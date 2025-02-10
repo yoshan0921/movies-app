@@ -14,6 +14,7 @@ export const SearchResultScreen = () => {
   const [keyword, setKeyword] = useState('');
   const [contentType, setContentType] = useState<ContentType>('multi');
   const {items, loading} = useFetchContent(contentType, keyword);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = () => {
     if (!inputKeyword.trim()) {
@@ -23,6 +24,7 @@ export const SearchResultScreen = () => {
     setContentType(inputContentType);
     setKeyword(inputKeyword);
     setInputKeyword('');
+    setHasSearched(true);
   };
 
   return (
@@ -49,7 +51,9 @@ export const SearchResultScreen = () => {
         <Loading />
       ) : items.length === 0 ? (
         <View className="flex-1 bg-white justify-center items-center">
-          <Text className="font-bold text-xl">Please initiate a search</Text>
+          <Text className="font-bold text-xl">
+            {hasSearched ? 'No results found' : 'Please initiate a search'}
+          </Text>
         </View>
       ) : (
         <ContentList items={items} contentType={contentType} />
