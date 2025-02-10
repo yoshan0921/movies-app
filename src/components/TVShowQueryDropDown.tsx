@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {
   Select,
@@ -39,7 +39,8 @@ export const TVShowQueryDropDown = ({onValueChange, currentValue}: Props) => {
       defaultValue={currentValue}
       onValueChange={value => {
         onValueChange(value as TVShowQueryType);
-      }}>
+      }}
+      isFocused={true}>
       <SelectTrigger style={styles.selectTrigger}>
         <SelectInput />
         <SelectIcon className="mr-3" as={ChevronDownIcon} />

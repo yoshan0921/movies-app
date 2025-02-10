@@ -55,7 +55,6 @@ export const useFetchContent = (type: ContentType, keyword: string) => {
 
     prevType.current = type;
     prevKeyword.current = keyword;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, keyword]);
 
   return {items, loading};

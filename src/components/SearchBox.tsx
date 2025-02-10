@@ -11,7 +11,13 @@ type Props = {
 export const SearchBox = ({onChangeText, value}: Props) => {
   return (
     <View>
-      <Input variant="outline" size="md" isDisabled={false} isInvalid={false} isReadOnly={false}>
+      <Input
+        className="border border-black-300 rounded-s"
+        variant="outline"
+        size="md"
+        isDisabled={false}
+        isInvalid={false}
+        isReadOnly={false}>
         <InputSlot className="pl-3">
           <InputIcon className="mr-3" as={SearchIcon} />
         </InputSlot>

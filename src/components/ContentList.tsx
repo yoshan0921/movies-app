@@ -26,7 +26,10 @@ export const ContentList: React.FC<{items: Content[]; contentType: string}> = ({
               <TouchableOpacity
                 style={styles.detailButton}
                 onPress={() =>
-                  navigation.navigate('Detail', {contentId: item.id, contentType: contentType})
+                  navigation.navigate('Detail', {
+                    contentId: item.id,
+                    contentType: contentType === 'multi' ? item.media_type : contentType,
+                  })
                 }>
                 <Text style={styles.buttonText}>More Details</Text>
               </TouchableOpacity>

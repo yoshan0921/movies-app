@@ -54,7 +54,7 @@ export const SearchResultScreen = () => {
           <Text style={styles.searchResultAreaText}>Please initiate a search</Text>
         </View>
       )}
-      <ContentList items={items} contentType="movie" />
+      <ContentList items={items} contentType={contentType} />
     </View>
   );
 };
