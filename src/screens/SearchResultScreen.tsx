@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
 import {useFetchContent} from '../hooks/useContentSearch';
 import {ContentTypeDropDown} from '../components/ContentTypeDropDown';
 import {ContentType} from '../types/ContentType';
@@ -25,18 +25,14 @@ export const SearchResultScreen = () => {
     setInputKeyword('');
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
-    <View style={styles.container}>
-      <View style={styles.searchConditionArea}>
+    <View className="flex-1 gap-8 bg-white pt-8">
+      <View className="gap-2 bg-white w-4/5 mx-auto">
         <Text>Search Movie/TV Show Name*</Text>
         <SearchBox onChangeText={setInputKeyword} value={inputKeyword} />
         <Text>Choose Search Type*</Text>
-        <View style={{flexDirection: 'row', gap: 8}}>
-          <View style={{flex: 1}}>
+        <View className="flex-row gap-2">
+          <View className="flex-1">
             <ContentTypeDropDown
               onValueChange={setInputContentType}
               currentValue={inputContentType}
@@ -45,41 +41,44 @@ export const SearchResultScreen = () => {
           <SearchButton onPress={handleSearch} />
         </View>
         <Text>
-          Search by Keyword={keyword}, Type={contentType}
+          Search result (Keyword={keyword}, Type={contentType})
         </Text>
       </View>
 
-      {items.length === 0 && (
-        <View style={styles.searchResultArea}>
-          <Text style={styles.searchResultAreaText}>Please initiate a search</Text>
+      {loading ? (
+        <Loading />
+      ) : items.length === 0 ? (
+        <View className="flex-1 bg-white justify-center items-center">
+          <Text className="font-bold text-xl">Please initiate a search</Text>
         </View>
+      ) : (
+        <ContentList items={items} contentType={contentType} />
       )}
-      <ContentList items={items} contentType={contentType} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: 32,
-    backgroundColor: '#fff',
-    paddingTop: 32,
-  },
-  searchConditionArea: {
-    gap: 8,
-    backgroundColor: '#fff',
-    width: '80%',
-    marginHorizontal: 'auto',
-  },
-  searchResultArea: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  searchResultAreaText: {
-    fontWeight: 'bold',
-    fontSize: 20,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     gap: 32,
+//     backgroundColor: '#fff',
+//     paddingTop: 32,
+//   },
+//   searchConditionArea: {
+//     gap: 8,
+//     backgroundColor: '#fff',
+//     width: '80%',
+//     marginHorizontal: 'auto',
+//   },
+//   searchResultArea: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   searchResultAreaText: {
+//     fontWeight: 'bold',
+//     fontSize: 20,
+//   },
+// });

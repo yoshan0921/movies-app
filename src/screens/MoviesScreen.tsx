@@ -11,16 +11,12 @@ export const MoviesScreen = () => {
   const {items, loading} = useFetchContent(listType);
   console.log('loading', loading);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.searchConditionArea}>
         <MovieQueryDropDown onValueChange={setListType} currentValue={listType} />
       </View>
-      <ContentList contentType="movie" items={items} />
+      {loading ? <Loading /> : <ContentList contentType="movie" items={items} />}
     </View>
   );
 };

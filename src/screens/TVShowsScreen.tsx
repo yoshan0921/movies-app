@@ -11,16 +11,12 @@ export const TVShowsScreen = () => {
   const {items, loading} = useFetchContent(listType);
   console.log(loading);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.searchConditionArea}>
         <TVShowQueryDropDown onValueChange={setListType} currentValue={listType} />
       </View>
-      <ContentList contentType="tv" items={items} />
+      {loading ? <Loading /> : <ContentList contentType="tv" items={items} />}
     </View>
   );
 };
