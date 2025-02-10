@@ -1,4 +1,5 @@
 import React from 'react';
+import {Keyboard} from 'react-native';
 import {Button, ButtonText, ButtonIcon} from '@/components/ui/button';
 import {SearchIcon} from '../../components/ui/icon';
 
@@ -7,13 +8,18 @@ type Props = {
 };
 
 export const SearchButton = ({onPress}: Props) => {
+  const handlePress = () => {
+    Keyboard.dismiss();
+    onPress();
+  };
+
   return (
     <Button
-      style={{backgroundColor: '#22B5D4'}}
+      className="bg-cyan-500"
       size="md"
       variant="solid"
       action="primary"
-      onPress={() => onPress()}>
+      onPress={handlePress}>
       <ButtonIcon className="mr-3" as={SearchIcon} />
       <ButtonText>Search</ButtonText>
     </Button>

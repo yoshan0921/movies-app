@@ -15,12 +15,15 @@ export const SearchResultScreen = () => {
   const [contentType, setContentType] = useState<ContentType>('multi');
   const {items, loading} = useFetchContent(contentType, keyword);
   const [hasSearched, setHasSearched] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleSearch = () => {
     if (!inputKeyword.trim()) {
       alert('Please enter a search keyword');
+      setIsError(true);
       return;
     }
+    setIsError(false);
     setContentType(inputContentType);
     setKeyword(inputKeyword);
     setInputKeyword('');
@@ -30,9 +33,13 @@ export const SearchResultScreen = () => {
   return (
     <View className="flex-1 gap-8 bg-white pt-8">
       <View className="gap-2 bg-white w-4/5 mx-auto">
-        <Text>Search Movie/TV Show Name*</Text>
-        <SearchBox onChangeText={setInputKeyword} value={inputKeyword} />
-        <Text>Choose Search Type*</Text>
+        <Text>
+          Search Movie/TV Show Name<Text className="text-red-500">*</Text>
+        </Text>
+        <SearchBox onChangeText={setInputKeyword} value={inputKeyword} isError={isError} />
+        <Text>
+          Choose Search Type<Text className="text-red-500">*</Text>
+        </Text>
         <View className="flex-row gap-2">
           <View className="flex-1">
             <ContentTypeDropDown
@@ -42,15 +49,20 @@ export const SearchResultScreen = () => {
           </View>
           <SearchButton onPress={handleSearch} />
         </View>
-        <Text>
-          Search result (Keyword={keyword}, Type={contentType})
-        </Text>
+
+        {isError ? (
+          <Text className="text-red-500">Movie-TV show name is required</Text>
+        ) : (
+          <Text>
+            {`Search result (Keyword=${keyword.toLocaleLowerCase()}, Type=${contentType.toLocaleLowerCase()})`}
+          </Text>
+        )}
       </View>
 
       {loading ? (
         <Loading />
       ) : items.length === 0 ? (
-        <View className="flex-1 bg-white justify-center items-center">
+        <View className="flex-1 bg-white items-center pt-20">
           <Text className="font-bold text-xl">
             {hasSearched ? 'No results found' : 'Please initiate a search'}
           </Text>
@@ -61,28 +73,3 @@ export const SearchResultScreen = () => {
     </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     gap: 32,
-//     backgroundColor: '#fff',
-//     paddingTop: 32,
-//   },
-//   searchConditionArea: {
-//     gap: 8,
-//     backgroundColor: '#fff',
-//     width: '80%',
-//     marginHorizontal: 'auto',
-//   },
-//   searchResultArea: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   searchResultAreaText: {
-//     fontWeight: 'bold',
-//     fontSize: 20,
-//   },
-// });

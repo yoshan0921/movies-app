@@ -20,18 +20,18 @@ export const ContentList: React.FC<{items: Content[]; contentType: string}> = ({
           <View style={styles.movieItem}>
             <Image source={{uri: `${IMAGE_BASE_URL}${item.poster_path}`}} style={styles.poster} />
             <View style={styles.movieInfo}>
-              <Text style={styles.title}>{item.title ?? item.name}</Text>
+              <Text className="font-bold">{item.title ?? item.name}</Text>
               <Text>Popularity: {item.popularity}</Text>
               <Text>Release Date: {item.release_date}</Text>
               <TouchableOpacity
-                style={styles.detailButton}
+                className="bg-cyan-500 py-2.5 rounded w-full"
                 onPress={() =>
                   navigation.navigate('Detail', {
                     contentId: item.id,
                     contentType: contentType === 'multi' ? item.media_type : contentType,
                   })
                 }>
-                <Text style={styles.buttonText}>More Details</Text>
+                <Text className="text-white text-center">More Details</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -49,16 +49,5 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 8,
     alignItems: 'flex-start',
-  },
-  title: {fontWeight: 'bold'},
-  detailButton: {
-    backgroundColor: '#22B5D4',
-    paddingVertical: 10,
-    borderRadius: 5,
-    width: '100%',
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
   },
 });
