@@ -17,17 +17,27 @@ import {TVShowQueryType} from '../types/ContentType';
 
 type Props = {
   onValueChange: (value: TVShowQueryType) => void;
+  currentValue: TVShowQueryType;
 };
 
-export const TVShowQueryDropDown = ({onValueChange}: Props) => {
-  const [selectedValue, setSelectedValue] = useState<TVShowQueryType>('popularTVShows');
+export const TVShowQueryDropDown = ({onValueChange, currentValue}: Props) => {
+  const TV_SHOW_SELECT_OPTIONS = [
+    {label: 'Airing Today', value: 'airingTodayTVShows'},
+    {label: 'On The Air', value: 'onTheAirTVShows'},
+    {label: 'Popular', value: 'popularTVShows'},
+    {label: 'Top Rated', value: 'topRatedTVShows'},
+  ];
+
+  const getTVShowLabelByValue = (value: string) => {
+    const item = TV_SHOW_SELECT_OPTIONS.find(option => option.value === value);
+    return item ? item.label : 'Unknown';
+  };
 
   return (
     <Select
-      initialLabel="Popular"
-      defaultValue={selectedValue}
+      initialLabel={getTVShowLabelByValue(currentValue)}
+      defaultValue={currentValue}
       onValueChange={value => {
-        setSelectedValue(value as TVShowQueryType);
         onValueChange(value as TVShowQueryType);
       }}>
       <SelectTrigger style={styles.selectTrigger}>

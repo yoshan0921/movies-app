@@ -20,18 +20,18 @@ type Props = {
   currentValue: ContentType;
 };
 
-const types = [
-  {label: 'Movie', value: 'movie'},
-  {label: 'Multi', value: 'multi'},
-  {label: 'TV Show', value: 'tv'},
-];
-
-const getLabelByValue = (value: string) => {
-  const item = types.find(type => type.value === value);
-  return item ? item.label : 'Unknown';
-};
-
 export const ContentTypeDropDown = ({onValueChange, currentValue}: Props) => {
+  const CONTENT_SELECT_OPTIONS = [
+    {label: 'Movie', value: 'movie'},
+    {label: 'Multi', value: 'multi'},
+    {label: 'TV Show', value: 'tv'},
+  ];
+
+  const getLabelByValue = (value: string) => {
+    const item = CONTENT_SELECT_OPTIONS.find(option => option.value === value);
+    return item ? item.label : 'Unknown';
+  };
+
   return (
     <Select
       initialLabel={getLabelByValue(currentValue)}

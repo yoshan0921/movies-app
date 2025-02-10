@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {
   Select,
@@ -17,17 +17,27 @@ import {MovieQueryType} from '../types/ContentType';
 
 type Props = {
   onValueChange: (value: MovieQueryType) => void;
+  currentValue: MovieQueryType;
 };
 
-export const MovieQueryDropDown = ({onValueChange}: Props) => {
-  const [selectedValue, setSelectedValue] = useState<MovieQueryType>('popularMovies');
+export const MovieQueryDropDown = ({onValueChange, currentValue}: Props) => {
+  const MOVIE_SELECT_OPTIONS = [
+    {label: 'Now Playing', value: 'nowPlayingMovies'},
+    {label: 'Popular', value: 'popularMovies'},
+    {label: 'Top Rated', value: 'topRatedMovies'},
+    {label: 'Upcoming', value: 'upcomingMovies'},
+  ];
+
+  const getMovieLabelByValue = (value: string) => {
+    const item = MOVIE_SELECT_OPTIONS.find(option => option.value === value);
+    return item ? item.label : 'Unknown';
+  };
 
   return (
     <Select
-      initialLabel="Popular"
-      defaultValue={selectedValue}
+      initialLabel={getMovieLabelByValue(currentValue)}
+      defaultValue={currentValue}
       onValueChange={value => {
-        setSelectedValue(value as MovieQueryType);
         onValueChange(value as MovieQueryType);
       }}
       isFocused={true}>

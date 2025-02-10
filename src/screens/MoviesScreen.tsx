@@ -18,7 +18,7 @@ export const MoviesScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchConditionArea}>
-        <MovieQueryDropDown onValueChange={setListType} />
+        <MovieQueryDropDown onValueChange={setListType} currentValue={listType} />
       </View>
       <ContentList contentType="movie" items={items} />
     </View>

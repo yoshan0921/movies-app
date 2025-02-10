@@ -18,7 +18,7 @@ export const TVShowsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchConditionArea}>
-        <TVShowQueryDropDown onValueChange={setListType} />
+        <TVShowQueryDropDown onValueChange={setListType} currentValue={listType} />
       </View>
       <ContentList contentType="tv" items={items} />
     </View>
