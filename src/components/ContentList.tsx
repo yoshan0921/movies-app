@@ -5,7 +5,10 @@ import {StackParam} from '../types/StackParams';
 import {Content} from '../types/Content';
 import {IMAGE_BASE_URL} from '../constants/Api';
 
-export const ContentList: React.FC<{items: Content[]}> = ({items}) => {
+export const ContentList: React.FC<{items: Content[]; contentType: string}> = ({
+  items,
+  contentType,
+}) => {
   const navigation = useNavigation<NavigationProp<StackParam>>();
 
   return (
@@ -22,7 +25,9 @@ export const ContentList: React.FC<{items: Content[]}> = ({items}) => {
               <Text>Release Date: {item.release_date}</Text>
               <TouchableOpacity
                 style={styles.detailButton}
-                onPress={() => navigation.navigate('Detail', {contentId: item.id})}>
+                onPress={() =>
+                  navigation.navigate('Detail', {contentId: item.id, contentType: contentType})
+                }>
                 <Text style={styles.buttonText}>More Details</Text>
               </TouchableOpacity>
             </View>

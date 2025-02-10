@@ -11,7 +11,7 @@ type DetailScreenRouteProp = RouteProp<StackParam, 'Detail'>;
 export const DetailScreen = () => {
   const route = useRoute<DetailScreenRouteProp>();
   const navigation = useNavigation();
-  const contentType = route.params.contentType;
+  const contentType = route.params.contentType ?? 'movie';
   const contentId = route.params.contentId ?? 0;
   const {content, loading} = useContentDetail(contentType, contentId);
 

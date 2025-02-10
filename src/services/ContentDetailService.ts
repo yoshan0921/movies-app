@@ -6,6 +6,7 @@ export const fetchContentDetail = async (
   contentId: number,
 ): Promise<Content> => {
   try {
+    console.log(`${BASE_URL}/${contentType}/${contentId}?api_key=${API_KEY}&page=1`);
     const response = await fetch(
       `${BASE_URL}/${contentType}/${contentId}?api_key=${API_KEY}&page=1`,
     );

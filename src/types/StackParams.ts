@@ -1,3 +1,3 @@
 export type StackParam = {
-  Detail: {contentId?: number};
+  Detail: {contentId?: number; contentType?: string};
 };
