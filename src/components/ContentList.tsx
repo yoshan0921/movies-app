@@ -3,9 +3,10 @@ import {Text, View, Image, FlatList, TouchableOpacity} from 'react-native';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {StackParam} from '../types/StackParams';
 import {Content} from '../types/Content';
+import {ContentType} from '../types/ContentType';
 import {IMAGE_BASE_URL} from '../constants/Api';
 
-export const ContentList: React.FC<{items: Content[]; contentType: string}> = ({
+export const ContentList: React.FC<{items: Content[]; contentType: ContentType}> = ({
   items,
   contentType,
 }) => {
@@ -24,8 +25,18 @@ export const ContentList: React.FC<{items: Content[]; contentType: string}> = ({
             />
             <View className="flex-1 gap-2 items-start">
               <Text className="font-bold">{item.title ?? item.name}</Text>
-              <Text>Popularity: {item.popularity}</Text>
-              <Text>Release Date: {item.release_date}</Text>
+              <Text>Popularity: {item.popularity ?? 'NA'}</Text>
+              {contentType === 'multi' ? (
+                item.media_type === 'movie' ? (
+                  <Text>Release Date: {item.release_date ?? 'NA'}</Text>
+                ) : (
+                  <Text>First Air Date: {item.first_air_date ?? 'NA'}</Text>
+                )
+              ) : contentType === 'movie' ? (
+                <Text>Release Date: {item.release_date ?? 'NA'}</Text>
+              ) : (
+                <Text>First Air Date: {item.first_air_date ?? 'NA'}</Text>
+              )}
               <TouchableOpacity
                 className="bg-cyan-500 py-2.5 rounded w-full"
                 onPress={() =>

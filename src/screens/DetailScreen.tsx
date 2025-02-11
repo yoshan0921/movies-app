@@ -5,13 +5,14 @@ import {RouteProp, useRoute, useNavigation, useFocusEffect} from '@react-navigat
 import {useContentDetail} from '../hooks/useContentDetail';
 import {ContentDetail} from '../components/ContentDetail';
 import {Loading} from '../components/Loading';
+import {ContentType} from '../types/ContentType';
 
 type DetailScreenRouteProp = RouteProp<StackParam, 'Detail'>;
 
 export const DetailScreen = () => {
   const route = useRoute<DetailScreenRouteProp>();
   const navigation = useNavigation();
-  const contentType = route.params.contentType ?? 'movie';
+  const contentType = route.params.contentType as ContentType;
   const contentId = route.params.contentId ?? 0;
   const {content, loading} = useContentDetail(contentType, contentId);
 
@@ -40,7 +41,7 @@ export const DetailScreen = () => {
 
   return (
     <View className="flex-1 gap-8 bg-white py-8">
-      {loading ? <Loading /> : <ContentDetail content={content} />}
+      {loading ? <Loading /> : <ContentDetail content={content} contentType={contentType} />}
     </View>
   );
 };
