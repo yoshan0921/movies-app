@@ -12,11 +12,15 @@ export const ContentDetail = ({content}: Props) => {
     <ScrollView className="px-5">
       <View className="flex-1 gap-10 flex-col items-center">
         <Text className="font-bold text-2xl">{content.title ?? content.name}</Text>
-        <Image
-          className="w-3/4 aspect-square"
-          source={{uri: `${IMAGE_BASE_URL}${content?.poster_path}`}}
-        />
-        <Text>{content.overview ?? 'NA'}</Text>
+        {content.poster_path ? (
+          <Image
+            className="w-3/4 aspect-square"
+            source={{uri: `${IMAGE_BASE_URL}${content?.poster_path}`}}
+          />
+        ) : (
+          <Text>No image</Text>
+        )}
+        <Text>{content.overview ?? 'No overview'}</Text>
         <Text>
           Popularity: {content.popularity ?? 'NA'} | Release Date: {content.release_date ?? 'NA'}
         </Text>
