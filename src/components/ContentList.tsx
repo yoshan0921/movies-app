@@ -1,15 +1,23 @@
 import React from 'react';
-import {Text, View, Image, FlatList, TouchableOpacity} from 'react-native';
+import {Text, View, Image, FlatList} from 'react-native';
+import {Button, ButtonText, ButtonIcon} from '@/components/ui/button';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {StackParam} from '../types/StackParams';
 import {Content} from '../types/Content';
 import {ContentType} from '../types/ContentType';
 import {IMAGE_BASE_URL} from '../constants/Api';
+import {ArrowLeftIcon} from '../../components/ui/icon';
+import {ArrowRightIcon} from '../../components/ui/icon';
 
-export const ContentList: React.FC<{items: Content[]; contentType: ContentType}> = ({
-  items,
-  contentType,
-}) => {
+type Props = {
+  items: Content[];
+  contentType: ContentType;
+  page: number;
+  nextPage: () => void;
+  prevPage: () => void;
+};
+
+export const ContentList = ({items, contentType, page, nextPage, prevPage}: Props) => {
   const navigation = useNavigation<NavigationProp<StackParam>>();
 
   return (
@@ -37,19 +45,34 @@ export const ContentList: React.FC<{items: Content[]; contentType: ContentType}>
               ) : (
                 <Text>First Air Date: {item.first_air_date ?? 'NA'}</Text>
               )}
-              <TouchableOpacity
-                className="bg-cyan-500 py-2.5 rounded w-full"
+              <Button
+                className="bg-cyan-500 w-full"
+                action="custom"
                 onPress={() =>
                   navigation.navigate('Detail', {
                     contentId: item.id,
                     contentType: contentType === 'multi' ? item.media_type : contentType,
                   })
                 }>
-                <Text className="text-white text-center">More Details</Text>
-              </TouchableOpacity>
+                <ButtonText>More Details</ButtonText>
+              </Button>
             </View>
           </View>
         )}
+        ListFooterComponent={
+          <View className="flex-row gap-4 justify-center pb-8">
+            {page > 1 && (
+              <Button variant="link" onPress={prevPage}>
+                <ButtonIcon className="mr-3" as={ArrowLeftIcon} />
+                <ButtonText>Prev</ButtonText>
+              </Button>
+            )}
+            <Button variant="link" onPress={nextPage}>
+              <ButtonText>Next</ButtonText>
+              <ButtonIcon className="mr-3" as={ArrowRightIcon} />
+            </Button>
+          </View>
+        }
       />
     </View>
   );

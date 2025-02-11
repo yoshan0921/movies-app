@@ -12,7 +12,7 @@ import {
 } from '../services/ContentListService';
 import {ContentQueryType} from '../types/ContentType';
 
-export const useFetchContent = (type: ContentQueryType) => {
+export const useFetchContent = (type: ContentQueryType, page: number = 1) => {
   const [items, setItems] = useState<Content[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +20,7 @@ export const useFetchContent = (type: ContentQueryType) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        let fetchFunction: () => Promise<Content[]>;
+        let fetchFunction: (page: number) => Promise<Content[]>;
 
         switch (type) {
           case 'popularMovies':
@@ -51,7 +51,7 @@ export const useFetchContent = (type: ContentQueryType) => {
             console.error('Invalid content type');
             return;
         }
-        const result = await fetchFunction();
+        const result = await fetchFunction(page);
         setItems(result);
       } catch (error) {
         console.error('Error fetching content:', error);
@@ -60,7 +60,7 @@ export const useFetchContent = (type: ContentQueryType) => {
       }
     };
     fetchData();
-  }, [type]);
+  }, [type, page]);
 
   return {items, loading};
 };

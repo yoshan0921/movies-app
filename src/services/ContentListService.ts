@@ -1,9 +1,10 @@
 import {Content} from '../types/Content';
 import {API_KEY, BASE_URL, MOVIE_ENDPOINTS, TVSHOW_ENDPOINTS} from '../constants/Api';
 
-const fetchContentList = async (path: string): Promise<Content[]> => {
+const fetchContentList = async (path: string, page: number): Promise<Content[]> => {
   try {
-    const response = await fetch(`${BASE_URL}/${path}?api_key=${API_KEY}&page=1`);
+    console.log(`${BASE_URL}/${path}?api_key=${API_KEY}&page=${page}`);
+    const response = await fetch(`${BASE_URL}/${path}?api_key=${API_KEY}&page=${page}`);
     const data = await response.json();
     return data.results ?? [];
   } catch (error) {
@@ -12,12 +13,20 @@ const fetchContentList = async (path: string): Promise<Content[]> => {
   }
 };
 
-export const fetchPopularMovieList = () => fetchContentList(MOVIE_ENDPOINTS.POPULAR);
-export const fetchNowPlayingMovieList = () => fetchContentList(MOVIE_ENDPOINTS.NOW_PLAYING);
-export const fetchTopRatedMovieList = () => fetchContentList(MOVIE_ENDPOINTS.TOP_RATED);
-export const fetchUpcomingMovieList = () => fetchContentList(MOVIE_ENDPOINTS.UPCOMING);
+export const fetchPopularMovieList = (page: number) =>
+  fetchContentList(MOVIE_ENDPOINTS.POPULAR, page);
+export const fetchNowPlayingMovieList = (page: number) =>
+  fetchContentList(MOVIE_ENDPOINTS.NOW_PLAYING, page);
+export const fetchTopRatedMovieList = (page: number) =>
+  fetchContentList(MOVIE_ENDPOINTS.TOP_RATED, page);
+export const fetchUpcomingMovieList = (page: number) =>
+  fetchContentList(MOVIE_ENDPOINTS.UPCOMING, page);
 
-export const fetchAiringTodayTVShowList = () => fetchContentList(TVSHOW_ENDPOINTS.AIRING_TODAY);
-export const fetchOnTheAirTVShowList = () => fetchContentList(TVSHOW_ENDPOINTS.ON_THE_AIR);
-export const fetchPopularTVShowList = () => fetchContentList(TVSHOW_ENDPOINTS.POPULAR);
-export const fetchTopRatedTVShowList = () => fetchContentList(TVSHOW_ENDPOINTS.TOP_RATED);
+export const fetchAiringTodayTVShowList = (page: number) =>
+  fetchContentList(TVSHOW_ENDPOINTS.AIRING_TODAY, page);
+export const fetchOnTheAirTVShowList = (page: number) =>
+  fetchContentList(TVSHOW_ENDPOINTS.ON_THE_AIR, page);
+export const fetchPopularTVShowList = (page: number) =>
+  fetchContentList(TVSHOW_ENDPOINTS.POPULAR, page);
+export const fetchTopRatedTVShowList = (page: number) =>
+  fetchContentList(TVSHOW_ENDPOINTS.TOP_RATED, page);

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {useFetchContent} from '../hooks/useContentSearch';
 import {ContentTypeDropDown} from '../components/ContentTypeDropDown';
@@ -13,7 +13,8 @@ export const SearchResultScreen = () => {
   const [inputContentType, setInputContentType] = useState<ContentType>('multi');
   const [keyword, setKeyword] = useState('');
   const [contentType, setContentType] = useState<ContentType>('multi');
-  const {items, loading} = useFetchContent(contentType, keyword);
+  const [page, setPage] = useState(1);
+  const {items, loading} = useFetchContent(contentType, keyword, page);
   const [hasSearched, setHasSearched] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -26,9 +27,21 @@ export const SearchResultScreen = () => {
     setIsError(false);
     setContentType(inputContentType);
     setKeyword(inputKeyword);
+    setPage(1);
     setInputKeyword('');
   };
 
+  useEffect(() => {
+    setPage(1);
+  }, [contentType, keyword]);
+
+  const handleLoadNext = () => {
+    setPage(prevPage => prevPage + 1);
+  };
+
+  const handleLoadPrev = () => {
+    setPage(prevPage => prevPage - 1);
+  };
   return (
     <View className="flex-1 gap-8 bg-white pt-8">
       <View className="gap-2 bg-white w-4/5 mx-auto">
@@ -69,7 +82,13 @@ export const SearchResultScreen = () => {
           </Text>
         </View>
       ) : (
-        <ContentList items={items} contentType={contentType} />
+        <ContentList
+          items={items}
+          contentType={contentType}
+          page={page}
+          nextPage={handleLoadNext}
+          prevPage={handleLoadPrev}
+        />
       )}
     </View>
   );

@@ -14,12 +14,7 @@ export const SearchButton = ({onPress}: Props) => {
   };
 
   return (
-    <Button
-      className="bg-cyan-500"
-      size="md"
-      variant="solid"
-      action="primary"
-      onPress={handlePress}>
+    <Button className="bg-cyan-500" size="md" variant="solid" action="custom" onPress={handlePress}>
       <ButtonIcon className="mr-3" as={SearchIcon} />
       <ButtonText>Search</ButtonText>
     </Button>
