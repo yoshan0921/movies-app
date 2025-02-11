@@ -30,10 +30,6 @@ export const DetailScreen = () => {
     }, []),
   );
 
-  if (loading) {
-    return <Loading />;
-  }
-
   if (!content) {
     return (
       <View className="flex-1 gap-8 bg-white py-12">
@@ -43,8 +39,8 @@ export const DetailScreen = () => {
   }
 
   return (
-    <View className="flex-1 gap-8 bg-white py-12">
-      <ContentDetail content={content} />
+    <View className="flex-1 gap-8 bg-white py-8">
+      {loading ? <Loading /> : <ContentDetail content={content} />}
     </View>
   );
 };

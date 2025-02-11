@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, ScrollView, Image, StyleSheet} from 'react-native';
+import {Text, View, ScrollView, Image} from 'react-native';
 import {Content} from '../types/Content';
 import {IMAGE_BASE_URL} from '../constants/Api';
 
@@ -9,22 +9,18 @@ type Props = {
 
 export const ContentDetail = ({content}: Props) => {
   return (
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
-        <Text style={styles.title}>{content.title ?? content.name}</Text>
-        <Image source={{uri: `${IMAGE_BASE_URL}${content?.poster_path}`}} style={styles.poster} />
-        <Text>{content.overview}</Text>
+    <ScrollView className="px-5">
+      <View className="flex-1 gap-10 flex-col items-center">
+        <Text className="font-bold text-2xl">{content.title ?? content.name}</Text>
+        <Image
+          className="w-3/4 aspect-square"
+          source={{uri: `${IMAGE_BASE_URL}${content?.poster_path}`}}
+        />
+        <Text>{content.overview ?? 'NA'}</Text>
         <Text>
-          Popularity: {content.popularity} | Release Date: {content.release_date}
+          Popularity: {content.popularity ?? 'NA'} | Release Date: {content.release_date ?? 'NA'}
         </Text>
       </View>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {flex: 1, gap: 40, flexDirection: 'column', alignItems: 'center'},
-  scrollView: {paddingHorizontal: 20},
-  title: {fontWeight: 'bold', fontSize: 24},
-  poster: {width: '75%', aspectRatio: 1 / 1, marginRight: 16},
-});

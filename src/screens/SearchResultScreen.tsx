@@ -18,6 +18,7 @@ export const SearchResultScreen = () => {
   const [isError, setIsError] = useState(false);
 
   const handleSearch = () => {
+    setHasSearched(true);
     if (!inputKeyword.trim()) {
       setIsError(true);
       return;
@@ -26,7 +27,6 @@ export const SearchResultScreen = () => {
     setContentType(inputContentType);
     setKeyword(inputKeyword);
     setInputKeyword('');
-    setHasSearched(true);
   };
 
   return (
