@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {
   Select,
   SelectTrigger,
@@ -14,6 +13,7 @@ import {
 } from '../../components/ui/select';
 import {ChevronDownIcon} from '../../components/ui/icon';
 import {ContentType} from '../types/ContentType';
+import {CONTENT_SELECT_OPTIONS} from '../constants/ContentType';
 
 type Props = {
   onValueChange: (value: ContentType) => void;
@@ -21,12 +21,6 @@ type Props = {
 };
 
 export const ContentTypeDropDown = ({onValueChange, currentValue}: Props) => {
-  const CONTENT_SELECT_OPTIONS = [
-    {label: 'Movie', value: 'movie'},
-    {label: 'Multi', value: 'multi'},
-    {label: 'TV Show', value: 'tv'},
-  ];
-
   const getLabelByValue = (value: string) => {
     const item = CONTENT_SELECT_OPTIONS.find(option => option.value === value);
     return item ? item.label : 'Unknown';
@@ -40,14 +34,14 @@ export const ContentTypeDropDown = ({onValueChange, currentValue}: Props) => {
         onValueChange(value as ContentType);
       }}
       isFocused={true}>
-      <SelectTrigger style={styles.selectTrigger}>
+      <SelectTrigger className="justify-between">
         <SelectInput />
         <SelectIcon className="mr-3" as={ChevronDownIcon} />
       </SelectTrigger>
       <SelectPortal>
         <SelectBackdrop />
-        <SelectContent style={styles.selectContainer}>
-          <SelectDragIndicatorWrapper style={styles.selectDragIndicatorContainer}>
+        <SelectContent className="pb-8">
+          <SelectDragIndicatorWrapper className="my-4">
             <SelectDragIndicator />
           </SelectDragIndicatorWrapper>
           <SelectItem label="Movie" value="movie" />
@@ -58,9 +52,3 @@ export const ContentTypeDropDown = ({onValueChange, currentValue}: Props) => {
     </Select>
   );
 };
-
-const styles = StyleSheet.create({
-  selectTrigger: {justifyContent: 'space-between'},
-  selectDragIndicatorContainer: {marginVertical: 16},
-  selectContainer: {paddingBottom: 32},
-});

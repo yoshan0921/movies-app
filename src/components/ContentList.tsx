@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, Image, FlatList, TouchableOpacity} from 'react-native';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {StackParam} from '../types/StackParams';
 import {Content} from '../types/Content';
@@ -12,14 +12,17 @@ export const ContentList: React.FC<{items: Content[]; contentType: string}> = ({
   const navigation = useNavigation<NavigationProp<StackParam>>();
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-white">
       <FlatList
         data={items}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
-          <View style={styles.movieItem}>
-            <Image source={{uri: `${IMAGE_BASE_URL}${item.poster_path}`}} style={styles.poster} />
-            <View style={styles.movieInfo}>
+          <View className="flex-row pb-4 px-2">
+            <Image
+              className="w-24 h-36 mr-4"
+              source={{uri: `${IMAGE_BASE_URL}${item.poster_path}`}}
+            />
+            <View className="flex-1 gap-2 items-start">
               <Text className="font-bold">{item.title ?? item.name}</Text>
               <Text>Popularity: {item.popularity}</Text>
               <Text>Release Date: {item.release_date}</Text>
@@ -40,14 +43,3 @@ export const ContentList: React.FC<{items: Content[]; contentType: string}> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#fff'},
-  movieItem: {flexDirection: 'row', paddingBottom: 16, paddingHorizontal: 8},
-  poster: {width: 100, height: 140, marginRight: 16},
-  movieInfo: {
-    flex: 1,
-    gap: 8,
-    alignItems: 'flex-start',
-  },
-});

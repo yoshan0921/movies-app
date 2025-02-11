@@ -6,5 +6,5 @@ export type Content = {
   popularity?: number;
   release_date?: string;
   overview?: string;
-  media_type?: 'movie' | 'tv';
+  media_type?: 'movie' | 'tv'; // Only multi has media_type
 };

@@ -1,5 +1,5 @@
 import React, {useLayoutEffect} from 'react';
-import {Text, View, StyleSheet, StatusBar} from 'react-native';
+import {Text, View, StatusBar} from 'react-native';
 import {StackParam} from '../types/StackParams';
 import {RouteProp, useRoute, useNavigation, useFocusEffect} from '@react-navigation/native';
 import {useContentDetail} from '../hooks/useContentDetail';
@@ -36,25 +36,15 @@ export const DetailScreen = () => {
 
   if (!content) {
     return (
-      <View style={styles.noContent}>
+      <View className="flex-1 gap-8 bg-white py-12">
         <Text>Content not found</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 gap-8 bg-white py-12">
       <ContentDetail content={content} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: 32,
-    backgroundColor: '#fff',
-    paddingVertical: 48,
-  },
-  noContent: {flex: 1, justifyContent: 'center', alignItems: 'center'},
-});

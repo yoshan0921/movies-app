@@ -19,7 +19,6 @@ export const SearchResultScreen = () => {
 
   const handleSearch = () => {
     if (!inputKeyword.trim()) {
-      alert('Please enter a search keyword');
       setIsError(true);
       return;
     }
@@ -50,7 +49,9 @@ export const SearchResultScreen = () => {
           <SearchButton onPress={handleSearch} />
         </View>
 
-        {isError ? (
+        {!hasSearched ? (
+          ''
+        ) : isError ? (
           <Text className="text-red-500">Movie-TV show name is required</Text>
         ) : (
           <Text>

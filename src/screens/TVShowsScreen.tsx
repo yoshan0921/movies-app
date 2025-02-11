@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View} from 'react-native';
 import {useFetchContent} from '../hooks/useContentList';
 import {TVShowQueryDropDown} from '../components/TVShowQueryDropDown';
 import {ContentList} from '../components/ContentList';
@@ -12,25 +12,11 @@ export const TVShowsScreen = () => {
   console.log(loading);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchConditionArea}>
+    <View className="flex-1 gap-8 bg-white pt-8">
+      <View className="gap-4 bg-white px-10">
         <TVShowQueryDropDown onValueChange={setListType} currentValue={listType} />
       </View>
       {loading ? <Loading /> : <ContentList contentType="tv" items={items} />}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: 32,
-    backgroundColor: '#fff',
-    paddingTop: 32,
-  },
-  searchConditionArea: {
-    gap: 16,
-    backgroundColor: '#fff',
-    paddingHorizontal: 40,
-  },
-});
