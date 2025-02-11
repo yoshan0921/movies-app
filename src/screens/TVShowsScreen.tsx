@@ -9,7 +9,6 @@ import {Loading} from '../components/Loading';
 export const TVShowsScreen = () => {
   const [listType, setListType] = useState<TVShowQueryType>('popularTVShows');
   const {items, loading} = useFetchContent(listType);
-  console.log(loading);
 
   return (
     <View className="flex-1 gap-8 bg-white pt-8">

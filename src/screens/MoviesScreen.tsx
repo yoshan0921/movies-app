@@ -9,7 +9,6 @@ import {Loading} from '../components/Loading';
 export const MoviesScreen = () => {
   const [listType, setListType] = useState<MovieQueryType>('popularMovies');
   const {items, loading} = useFetchContent(listType);
-  console.log('loading', loading);
 
   return (
     <View className="flex-1 gap-8 bg-white pt-8">
