@@ -9,18 +9,13 @@ type Props = {
   firstAirDate: string | null;
 };
 
-export const ReleaseDate: React.FC<Props> = ({
-  contentType,
-  mediaType,
-  releaseDate,
-  firstAirDate,
-}) => {
-  if (contentType === 'person' || mediaType === 'person') {
-    return <Text>NA</Text>;
-  } else if (contentType === 'movie' || mediaType === 'movie') {
+export const ReleaseDate = ({contentType, mediaType, releaseDate, firstAirDate}: Props) => {
+  if (contentType === 'movie' || mediaType === 'movie') {
     return <Text>Release Date: {releaseDate ?? 'NA'}</Text>;
   } else if (contentType === 'tv' || mediaType === 'tv') {
     return <Text>First Air Date: {firstAirDate ?? 'NA'}</Text>;
+  } else if (contentType === 'person' || mediaType === 'person') {
+    return <Text>NA</Text>;
   }
   return null;
 };
