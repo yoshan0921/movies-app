@@ -13,13 +13,15 @@ export const DetailScreen = () => {
   const route = useRoute<DetailScreenRouteProp>();
   const navigation = useNavigation();
   const contentType = route.params.contentType as ContentType;
-  const contentId = route.params.contentId ?? 0;
+  const contentId = route.params.contentId;
   const {content, loading} = useContentDetail(contentType, contentId);
 
   useLayoutEffect(() => {
     if (contentType === 'movie' && content?.title) {
       navigation.setOptions({title: content?.title});
     } else if (contentType === 'tv' && content?.name) {
+      navigation.setOptions({title: content?.name});
+    } else if (contentType === 'person' && content?.name) {
       navigation.setOptions({title: content?.name});
     }
   }, [navigation, contentType, content]);

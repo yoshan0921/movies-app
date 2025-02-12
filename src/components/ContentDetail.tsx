@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text, View, ScrollView, Image} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
 import {Content} from '../types/Content';
 import {ContentType} from '../types/ContentType';
-import {IMAGE_BASE_URL} from '../constants/Api';
+import {ReleaseDate} from './ReleaseDate';
+import {PosterImage} from './PosterImage';
 
 type Props = {
   content: Content;
@@ -13,23 +14,29 @@ export const ContentDetail = ({content, contentType}: Props) => {
   return (
     <ScrollView className="px-5">
       <View className="flex-1 gap-10 flex-col items-center">
-        <Text className="font-bold text-2xl">
-          {contentType === 'movie' ? content.title : content.name}
-        </Text>
-        {content.poster_path ? (
-          <Image
-            className="w-3/4 aspect-square"
-            source={{uri: `${IMAGE_BASE_URL}${content?.poster_path}`}}
-          />
-        ) : (
-          <Text>No image</Text>
-        )}
-        <Text>{content.overview ?? 'No overview'}</Text>
+        <Text className="font-bold text-2xl">{content.title ? content.title : content.name}</Text>
+        <PosterImage
+          contentType={contentType}
+          mediaType={content.media_type}
+          posterPath={content.poster_path ?? null}
+          profilePath={content.profile_path ?? null}
+          className="w-3/4 aspect-square"
+        />
         <Text>
-          Popularity: {content.popularity ?? 'NA'}
-          {contentType === 'movie'
-            ? ` | Release Date: ${content.release_date ?? 'NA'}`
-            : ` | First Air Date: ${content.first_air_date ?? 'NA'}`}
+          {content.overview
+            ? content.overview
+            : content.biography
+              ? content.biography
+              : 'No description available'}
+        </Text>
+        <Text>
+          Popularity: {content.popularity ?? 'NA'} |{' '}
+          <ReleaseDate
+            contentType={contentType}
+            mediaType={content.media_type}
+            releaseDate={content.release_date ?? null}
+            firstAirDate={content.first_air_date ?? null}
+          />
         </Text>
       </View>
     </ScrollView>

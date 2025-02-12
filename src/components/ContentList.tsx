@@ -1,11 +1,12 @@
 import React from 'react';
-import {Text, View, Image, FlatList} from 'react-native';
+import {Text, View, FlatList} from 'react-native';
 import {Button, ButtonText, ButtonIcon} from '@/components/ui/button';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {PosterImage} from './PosterImage';
+import {ReleaseDate} from './ReleaseDate';
 import {StackParam} from '../types/StackParams';
 import {Content} from '../types/Content';
 import {ContentType} from '../types/ContentType';
-import {IMAGE_BASE_URL} from '../constants/Api';
 import {ArrowLeftIcon} from '../../components/ui/icon';
 import {ArrowRightIcon} from '../../components/ui/icon';
 
@@ -27,24 +28,22 @@ export const ContentList = ({items, contentType, page, nextPage, prevPage}: Prop
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
           <View className="flex-row pb-4 px-2">
-            <Image
+            <PosterImage
+              contentType={contentType}
+              mediaType={item.media_type}
+              posterPath={item.poster_path ?? null}
+              profilePath={item.profile_path ?? null}
               className="w-24 h-36 mr-4"
-              source={{uri: `${IMAGE_BASE_URL}${item.poster_path}`}}
             />
             <View className="flex-1 gap-2 items-start">
               <Text className="font-bold">{item.title ?? item.name}</Text>
               <Text>Popularity: {item.popularity ?? 'NA'}</Text>
-              {contentType === 'multi' ? (
-                item.media_type === 'movie' ? (
-                  <Text>Release Date: {item.release_date ?? 'NA'}</Text>
-                ) : (
-                  <Text>First Air Date: {item.first_air_date ?? 'NA'}</Text>
-                )
-              ) : contentType === 'movie' ? (
-                <Text>Release Date: {item.release_date ?? 'NA'}</Text>
-              ) : (
-                <Text>First Air Date: {item.first_air_date ?? 'NA'}</Text>
-              )}
+              <ReleaseDate
+                contentType={contentType}
+                mediaType={item.media_type}
+                releaseDate={item.release_date ?? null}
+                firstAirDate={item.first_air_date ?? null}
+              />
               <Button
                 className="bg-cyan-500 w-full"
                 action="custom"

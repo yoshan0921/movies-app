@@ -1,8 +1,9 @@
 import {Content} from '../types/Content';
+import {ContentType} from '../types/ContentType';
 import {API_KEY, BASE_URL} from '../constants/Api';
 
 export const fetchContentDetail = async (
-  contentType: string,
+  contentType: ContentType,
   contentId: number,
 ): Promise<Content> => {
   try {
@@ -12,6 +13,6 @@ export const fetchContentDetail = async (
     return data;
   } catch (error) {
     console.error('Error fetching content detail:', error);
-    return {id: 0};
+    throw error;
   }
 };

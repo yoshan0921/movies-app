@@ -1,11 +1,13 @@
 export type Content = {
-  id: number;
+  id: number; // All
   title?: string; // Movie
   name?: string; // TV Show
-  poster_path?: string;
-  popularity?: number;
+  poster_path?: string; // Movie, TV Show
+  profile_path?: string; // Person
+  popularity?: number; // All
   release_date?: string; // Movie
   first_air_date?: string; // TV Show
-  overview?: string;
-  media_type?: 'movie' | 'tv'; // Only multi has media_type
+  overview?: string; // Movie, TV Show
+  biography?: string; // Person
+  media_type: 'movie' | 'tv' | 'person'; // Only multi has media_type
 };

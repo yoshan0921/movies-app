@@ -1,4 +1,4 @@
-export type ContentType = 'movie' | 'tv' | 'multi';
+export type ContentType = 'movie' | 'tv' | 'person' | 'multi';
 
 export type ContentQueryType = TVShowQueryType | MovieQueryType;
 
