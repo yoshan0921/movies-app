@@ -12,6 +12,17 @@ import {
 } from '../services/ContentListService';
 import {ContentQueryType} from '../types/ContentType';
 
+const fetchFunctions: {[key in ContentQueryType]: (page: number) => Promise<Content[]>} = {
+  popularMovies: fetchPopularMovieList,
+  nowPlayingMovies: fetchNowPlayingMovieList,
+  topRatedMovies: fetchTopRatedMovieList,
+  upcomingMovies: fetchUpcomingMovieList,
+  airingTodayTVShows: fetchAiringTodayTVShowList,
+  onTheAirTVShows: fetchOnTheAirTVShowList,
+  popularTVShows: fetchPopularTVShowList,
+  topRatedTVShows: fetchTopRatedTVShowList,
+};
+
 export const useFetchContent = (type: ContentQueryType, page: number = 1) => {
   const [items, setItems] = useState<Content[]>([]);
   const [loading, setLoading] = useState(false);
@@ -20,36 +31,10 @@ export const useFetchContent = (type: ContentQueryType, page: number = 1) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        let fetchFunction: (page: number) => Promise<Content[]>;
-
-        switch (type) {
-          case 'popularMovies':
-            fetchFunction = fetchPopularMovieList;
-            break;
-          case 'nowPlayingMovies':
-            fetchFunction = fetchNowPlayingMovieList;
-            break;
-          case 'topRatedMovies':
-            fetchFunction = fetchTopRatedMovieList;
-            break;
-          case 'upcomingMovies':
-            fetchFunction = fetchUpcomingMovieList;
-            break;
-          case 'airingTodayTVShows':
-            fetchFunction = fetchAiringTodayTVShowList;
-            break;
-          case 'onTheAirTVShows':
-            fetchFunction = fetchOnTheAirTVShowList;
-            break;
-          case 'popularTVShows':
-            fetchFunction = fetchPopularTVShowList;
-            break;
-          case 'topRatedTVShows':
-            fetchFunction = fetchTopRatedTVShowList;
-            break;
-          default:
-            console.error('Invalid content type');
-            return;
+        const fetchFunction = fetchFunctions[type];
+        if (!fetchFunction) {
+          console.error('Invalid content type');
+          return;
         }
         const result = await fetchFunction(page);
         setItems(result);
