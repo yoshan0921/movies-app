@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {MoviesScreen} from '../screens/MoviesScreen';
-import {TVShowsScreen} from '../screens/TVShowsScreen';
+import {ContentScreen} from '../screens/ContentScreen';
 import {SearchResultScreen} from '../screens/SearchResultScreen';
 
 const TopTabs = createMaterialTopTabNavigator();
@@ -15,9 +14,15 @@ export const TabNavigator = () => {
         tabBarIndicatorStyle: {backgroundColor: 'black', height: 3},
       }}
       style={styles.container}>
-      <TopTabs.Screen name="Movies" component={MoviesScreen} />
+      <TopTabs.Screen
+        name="Movies"
+        children={() => <ContentScreen contentType="movie" initialQueryType="popularMovies" />}
+      />
       <TopTabs.Screen name="Search Results" component={SearchResultScreen} />
-      <TopTabs.Screen name="TV Shows" component={TVShowsScreen} />
+      <TopTabs.Screen
+        name="TV Shows"
+        children={() => <ContentScreen contentType="tv" initialQueryType="popularTVShows" />}
+      />
     </TopTabs.Navigator>
   );
 };
