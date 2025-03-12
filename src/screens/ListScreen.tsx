@@ -11,7 +11,7 @@ type Props = {
   initialQueryType: ContentQueryType;
 };
 
-export const ContentScreen = ({contentType, initialQueryType}: Props) => {
+export const ListScreen = ({contentType, initialQueryType}: Props) => {
   const [listType, setListType] = useState<ContentQueryType>(initialQueryType);
   const [page, setPage] = useState(1);
   const {items, loading} = useFetchContent(listType, page);
